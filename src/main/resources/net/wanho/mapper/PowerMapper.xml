@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间，和接口关联-->
+<mapper namespace="net.wanho.mapper.PowerMapper">
+    <insert id="insertPower">
+
+        INSERT INTO power (powerName,status,parentId) VALUES (#{powerName},1,#{parentId})
+
+    </insert>
+    <update id="updatePower">
+
+         UPDATE power SET powerName = #{powerName} where powerId = #{powerId}
+
+    </update>
+    <delete id="delPower">
+
+        DELETE FROM power WHERE powerId = #{powerId}
+
+    </delete>
+    <delete id="delRolePower">
+
+        DELETE FROM role_power WHERE powerId = #{powerId}
+
+    </delete>
+
+    <select id="selectAllPower" resultType="net.wanho.po.Power">
+
+        SELECT * FROM power
+
+    </select>
+    <select id="selectPowerById" resultType="net.wanho.po.Power">
+
+
+        SELECT * FROM( SELECT rp.roleId,p.* FROM  role_power rp LEFT JOIN power p ON rp.powerId = p.powerId) pp where pp.roleId = #{roleId}
+
+    </select>
+    <select id="selectPowerOne" resultType="net.wanho.po.Power">
+
+        select * FROM power where parentId = #{parentId}
+
+    </select>
+    <select id="selectPowerByPowerId" resultType="net.wanho.po.Power">
+
+        select * FROM power where powerId = #{powerId}
+
+    </select>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间，和接口关联-->
+<mapper namespace="net.wanho.mapper.UserMapper">
+
+
+    <insert id="register">
+
+        INSERT INTO user (username,password,status,salt) VALUES (#{userName},#{password},#{status},#{salt})
+
+    </insert>
+    <update id="updateStatus">
+
+        UPDATE USER SET status = #{status} where id = #{id}
+
+    </update>
+    <select id="getUserByName" resultType="net.wanho.po.User">
+
+        SELECT
+        id,
+        username ,
+        status,
+        password,
+        salt
+        FROM user
+        WHERE
+        username =#{userName}
+
+    </select>
+    <select id="selectAllUser" resultType="net.wanho.po.User">
+
+        SELECT *  FROM USER
+
+    </select>
+</mapper>

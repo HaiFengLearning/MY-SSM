@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间，和接口关联-->
+<mapper namespace="net.wanho.mapper.RoleMapper">
+    <insert id="insert">
+
+        INSERT INTO user_role (id,roleId) VALUES (#{id},#{roleId})
+
+    </insert>
+    <insert id="insertRolePower">
+
+        INSERT into role_power (roleId,powerId) VALUES (#{roleId},#{powerId})
+
+    </insert>
+    <insert id="insertRole">
+
+        INSERT  into role (roleName,status) VALUES (#{roleName},"正常")
+
+    </insert>
+
+    <delete id="delRole">
+
+        DELETE FROM user_role WHERE id = #{id}
+
+    </delete>
+    <delete id="delRolePower">
+
+        DELETE FROM role_power WHERE roleId = #{roleId}
+
+    </delete>
+    <update id="delRoleStatus">
+
+        UPDATE role SET status = "禁用" where roleId = #{roleId}
+
+    </update>
+    <update id="updateRoleStatus">
+
+        UPDATE role SET status = "正常" where roleId = #{roleId}
+    </update>
+
+
+    <select id="selectAllRole" resultType="net.wanho.po.Role">
+
+        SELECT * FROM role WHERE status = #{status}
+
+    </select>
+    <select id="selectRoleById" resultType="net.wanho.po.Role">
+
+       SELECT
+	ur.id,
+	r.roleName,
+	r.`status`
+FROM
+	user_role ur
+LEFT JOIN role r ON ur.roleId = r.roleId
+WHERE
+	id = #{id} and status = "正常"
+
+    </select>
+    <select id="selectAllRoleAndAllStatus" resultType="net.wanho.po.Role">
+         SELECT * FROM role
+    </select>
+</mapper>
